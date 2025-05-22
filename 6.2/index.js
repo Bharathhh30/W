@@ -30,6 +30,7 @@ app.post("/signin",logger,(req,res)=>{
     const password = req.body.password
 
     const user = users.find(user => user.username === username)
+    console.log(user,'from here')
     if(user){
         const token = jwt.sign({
             username
@@ -81,6 +82,10 @@ app.get("/me",logger,auth,(req,res)=>{
         password : user.password,
         url : "/me"
     })
+})
+
+app.get("/",(req,res)=>{
+    res.sendFile(__dirname+"/public/index.html")
 })
 
 app.listen(3000)
