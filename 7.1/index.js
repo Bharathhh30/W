@@ -28,7 +28,7 @@ app.post("/signup",async(req,res)=>{
             .max(30,"it should be max 30 len")
             .includes("@","include @")
             .regex(/[A-Z]/,"it shoukd inlcude upper case ")
-            .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character");
+            .regex(/[^A-Za-z0-9]/, "Password must contain at least one special character")
         //1 uc, 1lc ,1 spl c
     })
     /*
