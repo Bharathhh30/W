@@ -1,4 +1,5 @@
-const express = require("express");;
+const express = require("express");
+const mongoose = require("mongoose")
 const jwt = require("jsonwebtoken");
 const {  userRouter } = require("./routes/user");
 const {  courseRouter } = require("./routes/course");
@@ -16,4 +17,12 @@ app.use("/api/v1/user",userRouter)
 app.use("api/v1/admin",adminRouter)
 app.use("/api/v1/course",courseRouter)
 
-app.listen(3000);
+async function main(){
+    //dot env
+    await mongoose.connect("mongodb+srv://bharath:8yra9dchqr%40MDB@cluster-learning.ipbdfmq.mongodb.net/coursera-app")
+    app.listen(3000);
+    console.log("listeninh on port 3000")
+}
+
+// this is good , start backend only if database is connected and is not down
+main()
