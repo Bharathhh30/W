@@ -1,7 +1,8 @@
 const express = require("express");;
 const jwt = require("jsonwebtoken");
-const { createUser, userRouter } = require("./routes/user");
-const { createCourse, courseRouter } = require("./routes/course");
+const {  userRouter } = require("./routes/user");
+const {  courseRouter } = require("./routes/course");
+const { adminRouter } = require("./routes/admin");
 
 const app = express()
 
@@ -12,6 +13,7 @@ const app = express()
 
 // industry way
 app.use("/api/v1/user",userRouter)
-app.use("/api/v1 /course",courseRouter)
+app.use("api/v1/admin",adminRouter)
+app.use("/api/v1/course",courseRouter)
 
 app.listen(3000);
