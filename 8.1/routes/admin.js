@@ -3,6 +3,10 @@ const adminRouter = Router()
 const {adminModel} = require("../db")
 
 adminRouter.post("/signup",(req,res)=>{
+
+    const { email,password,firstName,LastName } = req.body
+
+
     res.json({
         message : "signup endpoint"
     })
@@ -15,19 +19,19 @@ adminRouter.post("/signin",(req,res)=>{
 })
 
 
-adminRouter.post("/",(req,res)=>{
+adminRouter.post("/course",(req,res)=>{
     res.json({
         message : "course end pint"
     })
 })
 
-adminRouter.put("/",(req,res)=>{
+adminRouter.put("/course",(req,res)=>{
     res.json({
         message : "course end pint"
     })
 })
 
-adminRouter.get("/",(req,res)=>{
+adminRouter.get("/course/bulk",(req,res)=>{
     res.json({
         message : "course end pint"
     })
