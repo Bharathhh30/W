@@ -106,7 +106,7 @@ adminRouter.post("/signin",async(req,res)=>{
     if (passwordMatch) {
       const token = jwt.sign(
         {
-          userId: admin._id,  //userId should be remembered as we will use it in auth
+          adminId: admin._id,  //userId should be remembered as we will use it in auth
         },
         JWT_ADMIN_SECRET
       );
