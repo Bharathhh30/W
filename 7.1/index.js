@@ -8,7 +8,7 @@ const {z} = require("zod")
 // const dotenv = require("dotenv")
 
 // console.log(process.env.M)
-mongoose.connect("mongodb+srv://bharath:8yra9dchqr%40MDB@cluster-learning.ipbdfmq.mongodb.net/todo-app-database") 
+mongoose.connect("") 
 // dont forget to add data base after the connection url
 // if db exists it uses or it creates wiht the name specified
 const app = express()
