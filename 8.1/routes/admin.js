@@ -2,6 +2,31 @@ const {Router} = require("express")
 const adminRouter = Router()
 const {adminModel} = require("../db")
 const JWT_ADMIN_SECRET = "ilovevarsha"
+
+/*
+    have different secret for user and admin , because if stars didnot align and the user_id and admin_id are 1
+    and JWT secret is same for admin and user then the token generated will be same for both
+
+    and user can hit the admin endpoints and middleware might think non suspicious
+
+    If you use the same JWT secret for both users and admins, and the payloads have overlapping IDs (like userId = 1 and adminId = 1), then:
+
+    The generated JWT tokens might look similar or be valid with the same secret.
+
+    If your middleware doesn’t explicitly check the token’s role or claims, a user token could potentially be accepted as an admin token.
+
+    This can cause security issues, allowing normal users to access admin-only endpoints.
+
+    Why having different secrets helps:
+    Different secrets ensure that tokens for users and admins are signed differently, so a user token cannot be used as a valid admin token.
+
+    Even if IDs overlap, tokens won’t verify under the “other” secret.
+
+    This forces strict separation of privilege.
+*/
+
+
+
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { z } = require("zod");
