@@ -177,7 +177,8 @@ adminRouter.post("/course",adminMiddleware,async(req,res)=>{
 
 adminRouter.put("/course",adminMiddleware,async(req,res)=>{
   
-  const adminId = req.adminId
+  const adminId = req.adminId //we used this for admin id which reduce the hassle of finding adminid in the db 
+  // above line is very imp , if not used we dont know which users course to edit / exposes vulnerabilty  
   const { title,description,imageUrl,price ,courseId } = req.body
   
   const course = await courseModel.updateOne({
