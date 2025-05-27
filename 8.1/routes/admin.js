@@ -1,7 +1,7 @@
 const {Router} = require("express")
 const adminRouter = Router()
 const {adminModel} = require("../db")
-const JWT_ADMIN_SECRET = "ilovevarsha"
+const {JWT_ADMIN_SECRET} = require("../config")
 
 /*
     have different secret for user and admin , because if stars didnot align and the user_id and admin_id are 1
@@ -30,6 +30,7 @@ const JWT_ADMIN_SECRET = "ilovevarsha"
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 const { z } = require("zod");
+const { adminMiddleware } = require("../middleware/admin");
 
 console.log("entered admin router")
 
@@ -154,9 +155,12 @@ adminRouter.post("/signin",async(req,res)=>{
 })
 
 
-adminRouter.post("/course",(req,res)=>{
+adminRouter.post("/course",adminMiddleware,(req,res)=>{
+    const a = req.adminId
+    console.log(a,"e")
     res.json({
-        message : "course end pint"
+        message : "course end pint",
+        a : a
     })
 })
 

@@ -6,12 +6,13 @@ const { userModel } = require("../db");
 const userRouter = Router();
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
-const JWT_USER_SECRET = "iloveyashna";
+const {JWT_USER_SECRET} = require("../config")
 //Router() is not an instance it is a function
 //above both ways does same thing
 // {} -> destructue Router from express,express gives many but i took Router
 
 const { z } = require("zod");
+const { userMiddleware } = require("../middleware/user");
 
 userRouter.post("/signup", async (req, res) => {
   // zod validation
@@ -132,9 +133,11 @@ userRouter.post("/signin", async (req, res) => {
   }
 });
 
-userRouter.get("/purchases",(req,res)=>{
+userRouter.get("/purchases",userMiddleware,(req,res)=>{
+    const a = req.userId
     res.json({
-        message : "hi"
+        message : "hi",
+        a :a 
     })
 })
 module.exports = {
