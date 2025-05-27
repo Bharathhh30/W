@@ -1,6 +1,6 @@
 const {Router} = require("express")
 const adminRouter = Router()
-const {adminModel} = require("../db")
+const {adminModel, courseModel} = require("../db")
 const {JWT_ADMIN_SECRET} = require("../config")
 
 /*
@@ -155,26 +155,62 @@ adminRouter.post("/signin",async(req,res)=>{
 })
 
 
-adminRouter.post("/course",adminMiddleware,(req,res)=>{
-    const a = req.adminId
-    console.log(a,"e")
+adminRouter.post("/course",adminMiddleware,async(req,res)=>{
+    const adminId = req.adminId
+    
+     const { title,description,imageUrl,price } = req.body
+
+     const course = await courseModel.create({
+        title : title,
+        description : description,
+        imageUrl : imageUrl,
+        price : price,
+        creatorId : adminId
+     })
+
+
     res.json({
-        message : "course end pint",
-        a : a
+        message : "course created",
+        course_id : course._id
     })
 })
 
-adminRouter.put("/course",(req,res)=>{
-    res.json({
-        message : "course end pint"
+adminRouter.put("/course",adminMiddleware,async(req,res)=>{
+  
+  const adminId = req.adminId
+  const { title,description,imageUrl,price ,courseId } = req.body
+  
+  const course = await courseModel.updateOne({
+      _id : courseId,
+      creatorId : adminId    //find a doc which has couseId this and creator id this , just to make sure no vulnerability occurs
+      //like check if admin bharath has this course id so u can allwo to update
+    },{
+      title : title,
+        description : description,
+        imageUrl : imageUrl,
+        price : price,
+  })
+  
+  res.json({
+        message : "course updated"
     })
 })
 
-adminRouter.get("/course/bulk",(req,res)=>{
+adminRouter.get("/course/bulk",adminMiddleware,async(req,res)=>{
+    const adminId = req.adminId
+
+    const courses = await courseModel.find({
+      creatorId : adminId
+    })
+    console.log(courses)
+
     res.json({
-        message : "course end pint"
+        message : "courses of admin (you)",
+        courses
     })
 })
 module.exports = {
     adminRouter : adminRouter
 }
+
+
